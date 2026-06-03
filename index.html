@@ -789,6 +789,24 @@ cd new-comer-meta-handson</pre
           </div>
         </div>
 
+        <!-- OGP Simulator -->
+        <div class="card">
+          <h3>OGP確認ツール（シミュレータ）</h3>
+          <p>
+            OGPが正しく設定されているか、実際にSNSで共有する前に確認できるシミュレータです。
+          </p>
+          <p>
+            <a href="https://ogimage.tsmallfield.com/" target="_blank">
+              https://ogimage.tsmallfield.com/
+            </a>
+          </p>
+          <div class="highlight">
+            <strong>注意:</strong> LINEなど一部SNSでは画像が<strong>正方形</strong>にトリミングされて表示されます。
+            シミュレータで左右が切り落とされた場合の見え方を必ず確認しましょう。
+            重要な要素（テキスト・ロゴ）は画像の中央に配置するのが安全です。
+          </div>
+        </div>
+
         <!-- Where to check -->
         <div class="card">
           <h3>設定箇所と反映先</h3>
@@ -831,6 +849,31 @@ cd new-comer-meta-handson</pre
           <div class="highlight">
             <strong>見てみよう:</strong>
             ハコレコWebサイトをブラウザのDevToolで確認してみましょう。（タイトル、description、OGPタグ等がどのように書かれているか）
+          </div>
+        </div>
+
+        <!-- Facebook Share Debugger -->
+        <div class="card">
+          <h3>Facebookシェアデバッガー</h3>
+          <p>
+            FacebookはOGP情報をキャッシュします。OGPタグを変更した後は、シェアデバッガーでキャッシュを更新する必要があります。
+          </p>
+          <p>
+            <a href="https://developers.facebook.com/tools/debug/" target="_blank">
+              https://developers.facebook.com/tools/debug/
+            </a>
+          </p>
+          <div class="demo">
+            <div class="demo-label">使い方</div>
+            <ol style="padding-left:1.2em; line-height:2;">
+              <li>URLを入力して「デバッグ」をクリック</li>
+              <li>OGP情報が正しく取得されているか確認</li>
+              <li>画像やタイトルを変更した場合は「再度スクレイプ」でキャッシュを更新</li>
+            </ol>
+          </div>
+          <div class="highlight">
+            <strong>ポイント:</strong>
+            OGPを更新してもFacebookで古い画像が表示される場合は、シェアデバッガーで必ずキャッシュを破棄してください。
           </div>
         </div>
       </section>
@@ -945,6 +988,24 @@ cd new-comer-meta-handson</pre
             <strong>Tips:</strong> 最低限 <code>favicon.ico</code>（48x48）と
             <code>apple-touch-icon.png</code
             >（180x180）を用意すれば大体カバーできます。
+          </div>
+        </div>
+
+        <!-- Favicon Generator -->
+        <div class="card">
+          <h3>favicon.ico ジェネレータ</h3>
+          <p>
+            PNG画像をアップロードするだけで、ブラウザ対応の <code>favicon.ico</code> ファイルを生成できるツールです。
+          </p>
+          <p>
+            <a href="https://favicon-generator.mintsu-dev.com/" target="_blank">
+              https://favicon-generator.mintsu-dev.com/
+            </a>
+          </p>
+          <div class="highlight">
+            <strong>使い方:</strong>
+            正方形のPNG画像（512x512px 推奨）をアップロードして「生成」するだけで
+            <code>favicon.ico</code>（16x16, 32x32, 48x48マルチサイズ）がダウンロードできます。
           </div>
         </div>
       </section>
