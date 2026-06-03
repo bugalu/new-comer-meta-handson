@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- ===================================
+    Section 1: title / description / OGP
+  ==================================== -->
+    <!-- titleタグ: ブラウザタブ・検索結果に表示されるページタイトル -->
+    <title>metaタグ & スマホ制御 ハンズオン研修</title>
+
+    <!-- description: 検索結果に表示されるページの説明文（120文字程度推奨） -->
+    <meta
+      name="description"
+      content="metaタグの基本からOGP設定、ファビコン、viewport、スマホブラウザ固有の制御まで学べるハンズオン研修サイトです。新人エンジニア向けの実践的な内容を網羅しています。"
+    />
+
+    <!-- OGP (Open Graph Protocol): SNSでシェアされた時の表示を制御する -->
+    <meta property="og:title" content="metaタグ & スマホ制御 ハンズオン研修" />
+    <meta
+      property="og:description"
+      content="metaタグの基本からOGP、ファビコン、viewport、スマホ制御まで学べるハンズオン研修サイト"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://example.com/handson/" />
+    <meta property="og:image" content="https://example.com/handson/ogp.png" />
+    <meta property="og:site_name" content="新人研修ハンズオン" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- Twitter Card: Twitterでの表示を制御する -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="metaタグ & スマホ制御 ハンズオン研修" />
+    <meta
+      name="twitter:description"
+      content="metaタグの基本からスマホ制御まで学べる研修サイト"
+    />
+    <meta name="twitter:image" content="https://example.com/handson/ogp.png" />
+
+    <!-- ===================================
+    Section 2: ファビコン / スマホHOME画面アイコン
+  ==================================== -->
+    <!-- favicon: ブラウザタブに表示される小さなアイコン -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Apple Touch Icon: iPhoneのホーム画面に追加した時のアイコン（180x180推奨） -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Android向けマニフェスト -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- ===================================
+    Section 3: ブラウザ・スマホ固有の制御
+  ==================================== -->
+    <!-- 電話番号の自動リンク化を無効にする -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- テーマカラー: ブラウザのアドレスバーの色を変更（Android Chrome等） -->
+    <meta name="theme-color" content="#2563eb" />
+
+    <!-- iOS Safari: ステータスバーのスタイル -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="meta研修" />
+
+    <!-- ===================================
+    Section 4: viewport の設定
+  ==================================== -->
+    <!-- viewport: スマホでの表示領域を制御する最重要メタタグ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-light: #dbeafe;
+        --color-bg: #f8fafc;
+        --color-surface: #ffffff;
+        --color-text: #1e293b;
+        --color-text-muted: #64748b;
+        --color-border: #e2e8f0;
+        --color-code-bg: #f1f5f9;
+        --color-section1: #2563eb;
+        --color-section2: #059669;
+        --color-section3: #d97706;
+        --color-section4: #dc2626;
+        --radius: 12px;
+      }
+
+      body {
+        font-family:
+          "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP",
+          "Yu Gothic", sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        line-height: 1.8;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* ========== Header ========== */
+      .header {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        color: #fff;
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        font-size: clamp(0.875rem, 2vw, 1.125rem);
+        opacity: 0.85;
+      }
+
+      /* ========== Navigation ========== */
+      .nav {
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 0.5rem;
+        max-width: 900px;
+        margin: 0 auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .nav-list li a {
+        display: block;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        text-decoration: none;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        white-space: nowrap;
+        color: var(--color-text);
+        background: var(--color-code-bg);
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      .nav-list li:nth-child(1) a:hover,
+      .nav-list li:nth-child(1) a:focus {
+        background: #6b7280;
+        color: #fff;
+      }
+      .nav-list li:nth-child(2) a:hover,
+      .nav-list li:nth-child(2) a:focus {
+        background: var(--color-section1);
+        color: #fff;
+      }
+      .nav-list li:nth-child(3) a:hover,
+      .nav-list li:nth-child(3) a:focus {
+        background: var(--color-section2);
+        color: #fff;
+      }
+      .nav-list li:nth-child(4) a:hover,
+      .nav-list li:nth-child(4) a:focus {
+        background: #7c3aed;
+        color: #fff;
+      }
+      .nav-list li:nth-child(5) a:hover,
+      .nav-list li:nth-child(5) a:focus {
+        background: var(--color-section3);
+        color: #fff;
+      }
+      .nav-list li:nth-child(6) a:hover,
+      .nav-list li:nth-child(6) a:focus {
+        background: var(--color-section4);
+        color: #fff;
+      }
+
+      /* ========== Main ========== */
+      .main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      /* ========== Section ========== */
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 3px solid var(--color-border);
+      }
+
+      .section-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.125rem;
+        flex-shrink: 0;
+      }
+
+      #section-ogp .section-header {
+        border-color: var(--color-section1);
+      }
+      #section-ogp .section-number {
+        background: var(--color-section1);
+      }
+
+      #section-favicon .section-header {
+        border-color: var(--color-section2);
+      }
+      #section-favicon .section-number {
+        background: var(--color-section2);
+      }
+
+      #section-robots .section-header {
+        border-color: #7c3aed;
+      }
+      #section-robots .section-number {
+        background: #7c3aed;
+      }
+
+      #section-mobile .section-header {
+        border-color: var(--color-section3);
+      }
+      #section-mobile .section-number {
+        background: var(--color-section3);
+      }
+
+      #section-viewport .section-header {
+        border-color: var(--color-section4);
+      }
+      #section-viewport .section-number {
+        background: var(--color-section4);
+      }
+
+      .section-title {
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+        font-weight: 700;
+      }
+
+      /* ========== Card ========== */
+      .card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .card p {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ========== Code Block ========== */
+      .code-block {
+        background: #1e293b;
+        color: #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        font-size: 0.8125rem;
+        line-height: 1.7;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 0.75rem;
+      }
+
+      .code-block .tag {
+        color: #f472b6;
+      }
+      .code-block .attr {
+        color: #67e8f9;
+      }
+      .code-block .val {
+        color: #a5f3fc;
+      }
+      .code-block .comment {
+        color: #64748b;
+      }
+
+      code {
+        background: var(--color-code-bg);
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+        font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        font-size: 0.875em;
+      }
+
+      /* ========== Demo ========== */
+      .demo {
+        background: #fffbeb;
+        border: 2px dashed #f59e0b;
+        border-radius: var(--radius);
+        padding: 1.25rem;
+        margin-top: 1rem;
+      }
+
+      .demo-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #d97706;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ========== Table ========== */
+      .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 0.75rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 0.625rem 0.75rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      th {
+        background: var(--color-code-bg);
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      /* ========== Highlight ========== */
+      .highlight {
+        background: var(--color-primary-light);
+        border-left: 4px solid var(--color-primary);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+        font-size: 0.9375rem;
+      }
+
+      .highlight strong {
+        color: var(--color-primary);
+      }
+
+      /* ========== Phone Number Demo ========== */
+      .phone-demo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        padding: 0.5rem 0;
+      }
+
+      /* ========== Footer ========== */
+      .footer {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        color: var(--color-text-muted);
+        font-size: 0.8125rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      /* ========== Setup Steps ========== */
+      .steps {
+        counter-reset: step;
+        list-style: none;
+        padding: 0;
+      }
+
+      .steps li {
+        counter-increment: step;
+        position: relative;
+        padding: 0 0 1.5rem 3rem;
+        border-left: 2px solid var(--color-border);
+        margin-left: 1rem;
+      }
+
+      .steps li:last-child {
+        border-left-color: transparent;
+        padding-bottom: 0;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: -1rem;
+        top: 0;
+        width: 2rem;
+        height: 2rem;
+        background: #6b7280;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+      }
+
+      .steps li h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .steps li p {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .steps li p:last-child {
+        margin-bottom: 0;
+      }
+
+      .os-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .os-tab {
+        padding: 0.375rem 0.875rem;
+        border-radius: 2rem;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      .os-tab.active,
+      .os-tab:hover {
+        background: #6b7280;
+        color: #fff;
+        border-color: #6b7280;
+      }
+
+      .os-content {
+        display: none;
+      }
+      .os-content.active {
+        display: block;
+      }
+
+      /* ========== Responsive ========== */
+      @media (max-width: 640px) {
+        .header {
+          padding: 2rem 1rem;
+        }
+        .main {
+          padding: 1.5rem 1rem 3rem;
+        }
+        .card {
+          padding: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==========================================
+    HEADER
+  =========================================== -->
+    <header class="header">
+      <h1>metaタグ &amp; スマホ制御<br />ハンズオン研修</h1>
+      <p>HTMLの &lt;head&gt; に書く設定をひとつずつ理解しよう</p>
+    </header>
+
+    <!-- ==========================================
+    NAVIGATION
+  =========================================== -->
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="#section-setup">0. セットアップ</a></li>
+        <li><a href="#section-ogp">1. title / OGP</a></li>
+        <li><a href="#section-favicon">2. ファビコン</a></li>
+        <li><a href="#section-robots">3. robots</a></li>
+        <li><a href="#section-mobile">4. スマホ制御</a></li>
+        <li><a href="#section-viewport">5. viewport</a></li>
+      </ul>
+    </nav>
+
+    <!-- ==========================================
+    MAIN CONTENT
+  =========================================== -->
+    <main class="main">
+      <!-- ==============================
+      Section 0: セットアップ
+    =============================== -->
+      <section id="section-setup" class="section">
+        <div class="section-header" style="border-color: #6b7280">
+          <span class="section-number" style="background: #6b7280">0</span>
+          <h2 class="section-title">セットアップ &amp; スマホ実機確認</h2>
+        </div>
+
+        <div class="card">
+          <h3>事前準備</h3>
+          <div class="highlight">
+            <strong>前提:</strong> PC に <code>git</code> と
+            <code>Python 3</code>（または
+            <code>Node.js</code
+            >）がインストールされていること。PCとスマホが<strong>同じWi-Fiネットワーク</strong>に接続されていること。
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>手順</h3>
+          <ol class="steps">
+            <li>
+              <h3>リポジトリをクローンする</h3>
+              <div class="code-block">
+                git clone https://github.com/xxxxx/new-comer-handson.git cd
+                new-comer-handson
+              </div>
+            </li>
+
+            <li>
+              <h3>ローカルサーバーを起動する</h3>
+              <p>以下のどちらかを実行してください。</p>
+              <div class="os-tabs">
+                <button
+                  class="os-tab active"
+                  onclick="switchTab(this, 'python')"
+                >
+                  Python
+                </button>
+                <button class="os-tab" onclick="switchTab(this, 'node')">
+                  Node.js（npx）
+                </button>
+              </div>
+              <div id="tab-python" class="os-content active">
+                <div class="code-block">python3 -m http.server 8080</div>
+              </div>
+              <div id="tab-node" class="os-content">
+                <div class="code-block">npx serve -l 8080</div>
+              </div>
+              <p>
+                「Serving HTTP on 0.0.0.0 port 8080
+                ...」のようなメッセージが出ればOKです。
+              </p>
+            </li>
+
+            <li>
+              <h3>PCのローカルIPアドレスを確認する</h3>
+              <div class="os-tabs">
+                <button class="os-tab active" onclick="switchTab(this, 'mac')">
+                  macOS
+                </button>
+                <button class="os-tab" onclick="switchTab(this, 'win')">
+                  Windows
+                </button>
+              </div>
+              <div id="tab-mac" class="os-content active">
+                <div class="code-block">ipconfig getifaddr en0</div>
+                <p>
+                  例: <code>192.168.1.10</code> のような数字が表示されます。
+                </p>
+              </div>
+              <div id="tab-win" class="os-content">
+                <div class="code-block">ipconfig</div>
+                <p>
+                  「IPv4 アドレス」の欄に表示される
+                  <code>192.168.x.x</code> をメモしてください。
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <h3>PCのブラウザで確認する</h3>
+              <p>
+                まず以下のURLにアクセスして、ページが表示されることを確認してください。
+              </p>
+              <div class="code-block">http://localhost:8080</div>
+            </li>
+
+            <li>
+              <h3>スマホのブラウザでアクセスする</h3>
+              <p>
+                手順3で確認したIPアドレスを使って、スマホのブラウザで以下のようなURLにアクセスします。
+              </p>
+              <div class="code-block">
+                http://<span class="val">あなたのIPアドレス</span>:8080
+              </div>
+              <p>例: <code>http://192.168.1.10:8080</code></p>
+              <div class="highlight">
+                <strong>つながらない場合は:</strong><br />
+                ・PCとスマホが同じWi-Fiに接続されているか確認<br />
+                ・ファイアウォールで8080番ポートがブロックされていないか確認<br />
+                ・macOS: 「システム設定 → ネットワーク →
+                ファイアウォール」を確認<br />
+                ・Windows: 「Windows セキュリティ → ファイアウォール」を確認
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>スマホで確認できること</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>確認項目</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>theme-color</code> の反映</td>
+                  <td>アドレスバーの色が青色になるか（Android Chrome）</td>
+                </tr>
+                <tr>
+                  <td><code>telephone=no</code> の効果</td>
+                  <td>電話番号がリンク化されていないか</td>
+                </tr>
+                <tr>
+                  <td><code>viewport</code> の効果</td>
+                  <td>ページが画面幅に最適化されて表示されるか</td>
+                </tr>
+                <tr>
+                  <td>ホーム画面アイコン</td>
+                  <td>「ホーム画面に追加」した時のアイコン・アプリ名</td>
+                </tr>
+                <tr>
+                  <td>OGP表示</td>
+                  <td>
+                    URLをLINEやSNSに貼った時のカード表示（※ローカルでは確認不可・本番公開後に確認）
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+      Section 1: title / description / OGP
+    =============================== -->
+      <section id="section-ogp" class="section">
+        <div class="section-header">
+          <span class="section-number">1</span>
+          <h2 class="section-title">title / description / OGP</h2>
+        </div>
+
+        <!-- title -->
+        <div class="card">
+          <h3>&lt;title&gt; タグの役割</h3>
+          <p>
+            ブラウザのタブ、ブックマーク、検索結果のタイトルに表示されます。SEOの最重要要素のひとつです。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;title&gt;</span>metaタグ &amp; スマホ制御
+            ハンズオン研修<span class="tag">&lt;/title&gt;</span>
+          </div>
+          <div class="demo">
+            <div class="demo-label">実際の表示</div>
+            <p>
+              このページのブラウザタブを見てみましょう。タイトルが表示されているはずです。
+            </p>
+          </div>
+        </div>
+
+        <!-- description -->
+        <div class="card">
+          <h3>&lt;meta name="description"&gt; の役割</h3>
+          <p>
+            検索結果のタイトル下に表示されるスニペット文です。120文字程度が目安。ユーザーのクリック率に直結します。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"description"</span>
+            <span class="attr">content=</span
+            ><span class="val">"metaタグの基本からOGP設定、ファビコン、</span>
+            <span class="val">viewport、スマホブラウザ固有の制御まで</span>
+            <span class="val">学べるハンズオン研修サイトです。"</span
+            ><span class="tag">&gt;</span>
+          </div>
+        </div>
+
+        <!-- OGP -->
+        <div class="card">
+          <h3>OGP（Open Graph Protocol）とは</h3>
+          <p>
+            SNS（Twitter、Facebook、LINEなど）でURLをシェアした時に、タイトル・説明・画像をリッチに表示するための仕組みです。
+          </p>
+          <div class="code-block">
+            <pre>
+<span class="comment">&lt;!-- 基本のOGPタグ --&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">property=</span><span class="val">"og:title"</span> <span class="attr">content=</span><span class="val">"ページタイトル"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">property=</span><span class="val">"og:description"</span> <span class="attr">content=</span><span class="val">"説明文"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">property=</span><span class="val">"og:type"</span> <span class="attr">content=</span><span class="val">"website"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">property=</span><span class="val">"og:url"</span> <span class="attr">content=</span><span class="val">"https://example.com/"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">property=</span><span class="val">"og:image"</span> <span class="attr">content=</span><span class="val">"https://example.com/ogp.png"</span><span class="tag">&gt;</span>
+
+<span class="comment">&lt;!-- Twitter用 --&gt;</span>
+<span class="tag">&lt;meta</span> <span class="attr">name=</span><span class="val">"twitter:card"</span> <span class="attr">content=</span><span class="val">"summary_large_image"</span><span class="tag">&gt;</span>
+</pre>
+          </div>
+        </div>
+
+        <!-- OGP Image -->
+        <div class="card">
+          <h3>OGP画像の基本</h3>
+          <p>
+            推奨サイズは <strong>1200 x 630px</strong>（横長
+            1.91:1）。このサイズならほぼ全てのSNSで最適に表示されます。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SNS</th>
+                  <th>推奨サイズ</th>
+                  <th>カード種類</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Twitter / X</td>
+                  <td>1200 x 630px</td>
+                  <td>summary_large_image</td>
+                </tr>
+                <tr>
+                  <td>Facebook</td>
+                  <td>1200 x 630px</td>
+                  <td>（自動）</td>
+                </tr>
+                <tr>
+                  <td>LINE</td>
+                  <td>1200 x 630px</td>
+                  <td>（自動）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight">
+            <strong>ポイント:</strong>
+            OGP画像は<strong>絶対URL</strong>で指定する必要があります。相対パスではSNSクローラーが取得できません。
+          </div>
+        </div>
+
+        <!-- Where to check -->
+        <div class="card">
+          <h3>設定箇所と反映先</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>タグ</th>
+                  <th>反映先</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>&lt;title&gt;</code></td>
+                  <td>ブラウザタブ / 検索結果 / ブックマーク</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>検索結果のスニペット</td>
+                </tr>
+                <tr>
+                  <td><code>og:title</code></td>
+                  <td>SNSシェア時のタイトル</td>
+                </tr>
+                <tr>
+                  <td><code>og:description</code></td>
+                  <td>SNSシェア時の説明文</td>
+                </tr>
+                <tr>
+                  <td><code>og:image</code></td>
+                  <td>SNSシェア時のサムネイル画像</td>
+                </tr>
+                <tr>
+                  <td><code>twitter:card</code></td>
+                  <td>Twitter/Xでのカード表示形式</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+      Section 2: ファビコン / スマホHOMEアイコン
+    =============================== -->
+      <section id="section-favicon" class="section">
+        <div class="section-header">
+          <span class="section-number">2</span>
+          <h2 class="section-title">ファビコン / スマホHOME画面アイコン</h2>
+        </div>
+
+        <!-- favicon -->
+        <div class="card">
+          <h3>favicon の役割</h3>
+          <p>
+            ブラウザタブ、ブックマーク一覧、履歴に表示される小さなアイコンです。サイトの視認性とブランド認知に直結します。
+          </p>
+          <div class="code-block">
+            <pre>
+            <span class="comment">&lt;!-- 従来のICO形式 --&gt;</span>
+            <span class="tag">&lt;link</span> <span class="attr">rel=</span
+            ><span class="val">"icon"</span> <span class="attr">href=</span
+            ><span class="val">"/favicon.ico"</span>
+            <span class="attr">sizes=</span><span class="val">"48x48"</span
+            ><span class="tag">&gt;</span>
+
+            <span class="comment"
+              >&lt;!-- SVG形式（モダンブラウザ向け・拡大に強い） --&gt;</span
+            >
+            <span class="tag">&lt;link</span> <span class="attr">rel=</span
+            ><span class="val">"icon"</span> <span class="attr">href=</span
+            ><span class="val">"/favicon.svg"</span>
+            <span class="attr">type=</span
+            ><span class="val">"image/svg+xml"</span
+            ><span class="tag">&gt;</span>
+            </pre>
+          </div>
+          <div class="demo">
+            <div class="demo-label">実際の表示</div>
+            <p>
+              ブラウザタブの左端に小さなアイコンが表示されます（このサイトにはまだfavicon画像を設置していないのでデフォルトアイコンが表示されます）。
+            </p>
+          </div>
+        </div>
+
+        <!-- Apple Touch Icon -->
+        <div class="card">
+          <h3>スマホHOME追加時のアイコン</h3>
+          <p>iPhoneで「ホーム画面に追加」した時に表示されるアイコンです。</p>
+          <div class="code-block">
+            <pre>
+            <span class="comment"
+              >&lt;!-- iOS向け: 180x180px が推奨 --&gt;</span
+            >
+            <span class="tag">&lt;link</span> <span class="attr">rel=</span
+            ><span class="val">"apple-touch-icon"</span>
+            <span class="attr">sizes=</span><span class="val">"180x180"</span>
+            <span class="attr">href=</span
+            ><span class="val">"/apple-touch-icon.png"</span
+            ><span class="tag">&gt;</span>
+
+            <span class="comment"
+              >&lt;!-- Android向け: Web App Manifest --&gt;</span
+            >
+            <span class="tag">&lt;link</span> <span class="attr">rel=</span
+            ><span class="val">"manifest"</span> <span class="attr">href=</span
+            ><span class="val">"/site.webmanifest"</span
+            ><span class="tag">&gt;</span>
+            </pre>
+          </div>
+        </div>
+
+        <!-- Size Guide -->
+        <div class="card">
+          <h3>サイズ一覧</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>種類</th>
+                  <th>サイズ</th>
+                  <th>用途</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>favicon.ico</td>
+                  <td>16x16, 32x32, 48x48</td>
+                  <td>ブラウザタブ</td>
+                </tr>
+                <tr>
+                  <td>favicon.svg</td>
+                  <td>可変</td>
+                  <td>モダンブラウザ（高解像度対応）</td>
+                </tr>
+                <tr>
+                  <td>apple-touch-icon</td>
+                  <td>180x180</td>
+                  <td>iOSホーム画面</td>
+                </tr>
+                <tr>
+                  <td>Android icon</td>
+                  <td>192x192, 512x512</td>
+                  <td>Androidホーム画面・スプラッシュ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight">
+            <strong>Tips:</strong> 最低限 <code>favicon.ico</code>（48x48）と
+            <code>apple-touch-icon.png</code
+            >（180x180）を用意すれば大体カバーできます。
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+      Section 3: robots の設定
+    =============================== -->
+      <section id="section-robots" class="section">
+        <div class="section-header">
+          <span class="section-number">3</span>
+          <h2 class="section-title">robots の設定</h2>
+        </div>
+
+        <!-- robots role -->
+        <div class="card">
+          <h3>robots meta タグの役割</h3>
+          <p>
+            検索エンジンのクローラー（GoogleやBingのbot）に対して、そのページを<strong>検索結果に載せて良いか</strong>、<strong>リンク先を辿って良いか</strong>を伝えるためのメタタグです。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"robots"</span> <span class="attr">content=</span
+            ><span class="val">"index, follow"</span
+            ><span class="tag">&gt;</span>
+          </div>
+          <p>
+            上記は「インデックスしてよい・リンクをたどってよい」という意味で、これがデフォルト挙動です（タグ自体を書かなくても同じ）。
+          </p>
+        </div>
+
+        <!-- index / noindex -->
+        <div class="card">
+          <h3>index / noindex</h3>
+          <p>そのページを検索結果に表示してよいかを制御します。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>値</th>
+                  <th>意味</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>index</code></td>
+                  <td>検索結果に表示してよい（デフォルト）</td>
+                </tr>
+                <tr>
+                  <td><code>noindex</code></td>
+                  <td>検索結果に表示しないでほしい</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">
+            <span class="comment"
+              >&lt;!-- 検索結果に出したくないページ --&gt;</span
+            >
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"robots"</span> <span class="attr">content=</span
+            ><span class="val">"noindex"</span><span class="tag">&gt;</span>
+          </div>
+          <div class="highlight">
+            <strong>noindex を使うケース:</strong>
+            会員限定ページ、サンクスページ、検索結果ページ、重複コンテンツ、テスト・ステージング環境など、検索から見つけてほしくないページに設定します。
+          </div>
+        </div>
+
+        <!-- nofollow -->
+        <div class="card">
+          <h3>nofollow</h3>
+          <p>
+            そのページ内のリンクをクローラーに辿らせるかどうかを制御します。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>値</th>
+                  <th>意味</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>follow</code></td>
+                  <td>ページ内のリンクをたどってよい（デフォルト）</td>
+                </tr>
+                <tr>
+                  <td><code>nofollow</code></td>
+                  <td>ページ内のリンクをたどらないでほしい</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">
+            <pre>
+            <span class="comment"
+              >&lt;!-- インデックスはOK、リンクはたどらせない --&gt;</span
+            >
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"robots"</span> <span class="attr">content=</span
+            ><span class="val">"index, nofollow"</span
+            ><span class="tag">&gt;</span>
+
+            <span class="comment"
+              >&lt;!-- 両方拒否（最も厳しい設定） --&gt;</span
+            >
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"robots"</span> <span class="attr">content=</span
+            ><span class="val">"noindex, nofollow"</span
+            ><span class="tag">&gt;</span>
+          </pre>
+          </div>
+          <p>
+            個別のリンク単位で制御したい場合は、<code>&lt;a&gt;</code> タグに
+            <code>rel="nofollow"</code>
+            を指定します（ユーザー投稿のURLなど、信頼できないリンクに使われます）。
+          </p>
+        </div>
+
+        <!-- Search engine relationship -->
+        <div class="card">
+          <h3>検索エンジンとの関係</h3>
+          <p>
+            robots meta
+            タグは<strong>クローラーへのお願い</strong>です。Google・Bing・Yahoo!などの主要な検索エンジンはこれに従いますが、悪意のあるbotは無視することもあります。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>仕組み</th>
+                  <th>役割</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>robots.txt</code></td>
+                  <td>サイト全体のクロール可否を制御（ファイル単位）</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;meta name="robots"&gt;</code></td>
+                  <td>ページ単位でインデックス・リンク追跡を制御</td>
+                </tr>
+                <tr>
+                  <td><code>X-Robots-Tag</code> ヘッダ</td>
+                  <td>
+                    HTTPレスポンスヘッダで制御（PDF等のHTML以外にも使える）
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>rel="nofollow"</code></td>
+                  <td>個別リンク単位での制御</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight">
+            <strong>重要:</strong>
+            <code>noindex</code>
+            は「インデックスしないで」というリクエストです。すでにインデックスされているページに後から
+            <code>noindex</code>
+            を付けても、クローラーが再訪して認識するまでは検索結果に残ります。
+          </div>
+        </div>
+
+        <!-- Development env -->
+        <div class="card">
+          <h3>開発環境・ステージング環境での扱い</h3>
+          <p>
+            開発中のサイトやステージング環境が誤って検索結果に出ると、本番サイトと内容が重複してSEO上のペナルティを受けたり、未公開情報が漏れたりするリスクがあります。
+          </p>
+          <div class="code-block">
+            <pre>
+            <span class="comment"
+              >&lt;!-- ステージング・開発環境では必ず設定する --&gt;</span
+            >
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"robots"</span> <span class="attr">content=</span
+            ><span class="val">"noindex, nofollow"</span
+            ><span class="tag">&gt;</span>
+          </pre>
+          </div>
+          <p>
+            環境変数や設定ファイルで本番か否かを判定し、本番以外は
+            <code>noindex, nofollow</code>
+            を出力する実装にしておくのが定石です。
+          </p>
+          <div class="highlight">
+            <strong>本番反映時の事故:</strong> 開発環境用に書いた
+            <code>noindex</code>
+            をそのまま本番にデプロイしてしまい、検索結果からサイトが消えるという事故は新人がやりがちな失敗のひとつです。リリース前のチェック項目に必ず入れましょう。
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+      Section 4: ブラウザ・スマホ固有の制御
+    =============================== -->
+      <section id="section-mobile" class="section">
+        <div class="section-header">
+          <span class="section-number">4</span>
+          <h2 class="section-title">ブラウザ・スマホ固有の制御</h2>
+        </div>
+
+        <!-- telephone=no -->
+        <div class="card">
+          <h3>telephone=no（電話番号の自動リンク化を無効にする）</h3>
+          <p>
+            スマホブラウザは数字の羅列を電話番号と誤認識し、自動的にリンク化することがあります。意図しないリンクを防ぐために設定します。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"format-detection"</span>
+            <span class="attr">content=</span
+            ><span class="val">"telephone=no"</span
+            ><span class="tag">&gt;</span>
+          </div>
+          <div class="demo">
+            <div class="demo-label">デモ: この数字はどう表示される？</div>
+            <p class="phone-demo">03-1234-5678</p>
+            <p>
+              このページでは
+              <code>telephone=no</code>
+              を設定済みなので、上の数字はリンクにならないはずです。
+            </p>
+            <p>
+              設定しなかった場合、iOSのSafariなどでは自動的に電話リンクになります。
+            </p>
+          </div>
+        </div>
+
+        <!-- theme-color -->
+        <div class="card">
+          <h3>theme-color（テーマカラー）</h3>
+          <p>
+            Android Chromeのアドレスバー周辺の色や、Safari
+            15+のタブバーの色を変更できます。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"theme-color"</span>
+            <span class="attr">content=</span><span class="val">"#2563eb"</span
+            ><span class="tag">&gt;</span>
+          </div>
+          <div class="demo">
+            <div class="demo-label">デモ</div>
+            <p>
+              このサイトには
+              <code>#2563eb</code>（青色）が設定されています。Android
+              Chromeで閲覧するとアドレスバーが青くなります。
+            </p>
+          </div>
+        </div>
+
+        <!-- apple-touch -->
+        <div class="card">
+          <h3>apple-touch関連の設定</h3>
+          <p>iOSでWebサイトをホーム画面に追加した際の挙動を制御します。</p>
+          <div class="code-block">
+            <pre>
+              <span class="comment"
+                >&lt;!-- フルスクリーン表示を有効にする --&gt;</span
+              >
+              <span class="tag">&lt;meta</span> <span class="attr">name=</span
+              ><span class="val">"apple-mobile-web-app-capable"</span>
+              <span class="attr">content=</span><span class="val">"yes"</span
+              ><span class="tag">&gt;</span>
+              <span class="comment">&lt;!-- ステータスバーの外観 --&gt;</span>
+              <span class="tag">&lt;meta</span> <span class="attr">name=</span
+              ><span class="val">"apple-mobile-web-app-status-bar-style"</span>
+              <span class="attr">content=</span><span class="val">"default"</span
+              ><span class="tag">&gt;</span>
+              <span class="comment"
+                >&lt;!-- ホーム画面に表示されるアプリ名 --&gt;</span
+              >
+              <span class="tag">&lt;meta</span> <span class="attr">name=</span
+              ><span class="val">"apple-mobile-web-app-title"</span>
+              <span class="attr">content=</span><span class="val">"meta研修"</span
+              ><span class="tag">&gt;</span>
+            </pre>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>status-bar-style</th>
+                  <th>効果</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>default</code></td>
+                  <td>白い背景のステータスバー</td>
+                </tr>
+                <tr>
+                  <td><code>black</code></td>
+                  <td>黒い背景のステータスバー</td>
+                </tr>
+                <tr>
+                  <td><code>black-translucent</code></td>
+                  <td>半透明（コンテンツがステータスバー裏に回り込む）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Control range -->
+        <div class="card">
+          <h3>metaタグで制御できる範囲</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>制御内容</th>
+                  <th>metaタグ</th>
+                  <th>対象ブラウザ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>電話番号の自動リンク</td>
+                  <td><code>format-detection</code></td>
+                  <td>iOS Safari</td>
+                </tr>
+                <tr>
+                  <td>アドレスバーの色</td>
+                  <td><code>theme-color</code></td>
+                  <td>Android Chrome / Safari 15+</td>
+                </tr>
+                <tr>
+                  <td>フルスクリーンモード</td>
+                  <td><code>apple-mobile-web-app-capable</code></td>
+                  <td>iOS Safari</td>
+                </tr>
+                <tr>
+                  <td>ステータスバー外観</td>
+                  <td><code>apple-mobile-web-app-status-bar-style</code></td>
+                  <td>iOS Safari</td>
+                </tr>
+                <tr>
+                  <td>ホーム画面アプリ名</td>
+                  <td><code>apple-mobile-web-app-title</code></td>
+                  <td>iOS Safari</td>
+                </tr>
+                <tr>
+                  <td>表示領域の制御</td>
+                  <td><code>viewport</code></td>
+                  <td>全ブラウザ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight">
+            <strong>注意:</strong>
+            metaタグで制御できるのはブラウザの表示・挙動の一部のみです。ブラウザのセキュリティ設定やOS全体の制御はできません。
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+      Section 5: viewport
+    =============================== -->
+      <section id="section-viewport" class="section">
+        <div class="section-header">
+          <span class="section-number">5</span>
+          <h2 class="section-title">viewport の設定</h2>
+        </div>
+
+        <!-- viewport role -->
+        <div class="card">
+          <h3>viewport の役割</h3>
+          <p>
+            スマホブラウザの「仮想的な画面幅」を制御するメタタグです。これがないと、スマホでもPC向けの幅（通常980px）でページが描画されて、文字が極端に小さく表示されてしまいます。
+          </p>
+          <div class="code-block">
+            <span class="tag">&lt;meta</span> <span class="attr">name=</span
+            ><span class="val">"viewport"</span>
+            <span class="attr">content=</span
+            ><span class="val">"width=device-width, initial-scale=1.0"</span
+            ><span class="tag">&gt;</span>
+          </div>
+        </div>
+
+        <!-- width=device-width -->
+        <div class="card">
+          <h3>width=device-width</h3>
+          <p>
+            ページの幅をデバイスの画面幅に合わせます。iPhone SE なら 375px、iPad
+            なら 768px、といった具合にデバイスごとの最適な幅になります。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>デバイス例</th>
+                  <th>device-width</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>iPhone SE</td>
+                  <td>375px</td>
+                </tr>
+                <tr>
+                  <td>iPhone 14</td>
+                  <td>390px</td>
+                </tr>
+                <tr>
+                  <td>iPhone 14 Pro Max</td>
+                  <td>430px</td>
+                </tr>
+                <tr>
+                  <td>iPad</td>
+                  <td>768px</td>
+                </tr>
+                <tr>
+                  <td>iPad Pro 12.9"</td>
+                  <td>1024px</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- initial-scale -->
+        <div class="card">
+          <h3>initial-scale</h3>
+          <p>
+            ページ読み込み時の初期ズーム倍率です。<code>1.0</code>
+            は等倍（ズームなし）です。
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>プロパティ</th>
+                  <th>値</th>
+                  <th>説明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>width</code></td>
+                  <td><code>device-width</code></td>
+                  <td>デバイスの幅に合わせる</td>
+                </tr>
+                <tr>
+                  <td><code>initial-scale</code></td>
+                  <td><code>1.0</code></td>
+                  <td>初期ズーム倍率</td>
+                </tr>
+                <tr>
+                  <td><code>minimum-scale</code></td>
+                  <td><code>1.0</code></td>
+                  <td>最小ズーム倍率</td>
+                </tr>
+                <tr>
+                  <td><code>maximum-scale</code></td>
+                  <td><code>5.0</code></td>
+                  <td>最大ズーム倍率</td>
+                </tr>
+                <tr>
+                  <td><code>user-scalable</code></td>
+                  <td><code>yes / no</code></td>
+                  <td>ピンチズームの可否</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight">
+            <strong>アクセシビリティ注意:</strong>
+            <code>user-scalable=no</code> や
+            <code>maximum-scale=1.0</code>
+            はユーザーのズームを無効にしてしまうため、アクセシビリティガイドラインに反します。特別な理由がない限り使わないでください。
+          </div>
+        </div>
+
+        <!-- responsive -->
+        <div class="card">
+          <h3>レスポンシブデザインとの関係</h3>
+          <p>
+            viewportの設定はレスポンシブデザインの<strong>前提条件</strong>です。CSSのメディアクエリは
+            viewport の幅に基づいて動作します。
+          </p>
+          <div class="code-block">
+            <pre>
+              <span class="comment"
+                >/* viewport が設定されていて初めて、
+                以下のメディアクエリが期待どおり動く */</span
+              >
+              <span class="tag">@media</span> (max-width: 768px) { .sidebar {
+              display: none; } }
+              <span class="tag">@media</span> (max-width: 480px) { .header h1 {
+              font-size: 1.25rem; } }
+            </pre>
+          </div>
+        </div>
+
+        <!-- Without viewport -->
+        <div class="card">
+          <h3>viewport 未設定時の挙動</h3>
+          <p>viewport を設定しないと以下のような問題が起きます:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>問題</th>
+                  <th>原因</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>文字がとても小さい</td>
+                  <td>980px幅をスマホ画面に縮小するため</td>
+                </tr>
+                <tr>
+                  <td>横スクロールが発生</td>
+                  <td>PC幅前提のレイアウトがはみ出す</td>
+                </tr>
+                <tr>
+                  <td>メディアクエリが効かない</td>
+                  <td>ブラウザが980px幅と認識するため</td>
+                </tr>
+                <tr>
+                  <td>タップしづらい</td>
+                  <td>ボタンやリンクが極端に小さくなる</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="demo">
+            <div class="demo-label">実験してみよう</div>
+            <p>
+              ブラウザの開発者ツールで、この &lt;head&gt; 内の viewport
+              メタタグを削除してリロードしてみましょう。表示がどう変わるか確認できます。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================
+    FOOTER
+  =========================================== -->
+    <footer class="footer">
+      <p>
+        新人研修用ハンズオンサイト &mdash; HTMLの &lt;head&gt;
+        に書くメタ情報を学ぼう
+      </p>
+    </footer>
+
+    <script>
+      function switchTab(btn, id) {
+        var group = btn.parentElement;
+        var card = group.closest(".card") || group.closest("li");
+        group.querySelectorAll(".os-tab").forEach(function (t) {
+          t.classList.remove("active");
+        });
+        btn.classList.add("active");
+        card.querySelectorAll(".os-content").forEach(function (c) {
+          c.classList.remove("active");
+        });
+        var target = card.querySelector("#tab-" + id);
+        if (target) target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
